@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<script src="https://kit.fontawesome.com/566815440d.js" crossorigin="anonymous"></script>
+		<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="styles.css">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script>
+			let quotes = [{
+				quote: "To think is easy. To act is hard. But the hardest thing in the world is to act in accordance with your thinking.",
+				author: "Johann Wolfgang von Goethe"
+			}, {
+				quote: "Just do the best you can. No one can do more than that.",
+				author: "John Wooden"
+			}, {
+				quote: "Education is what remains after one has forgotten what one has learned in school.",
+				author: "Albert Einstein"
+			}, {
+				quote: "You must look within yourself to save yourself from your other self, only then will your true self reveal itself.",
+				author: "Zuko"
+			}, {
+				quote: "The person who says it cannot be done should not interrupt the person who is doing it.",
+				author: "Chinese Proverb"
+			}, {
+				quote: "I am not a product of my circumstances. I am a product of my decisions.",
+				author: "Stephen Covey"
+			}, {
+				quote: "Build your own dreams, or someone else will hire you to build theirs.",
+				author: "Farrah Gray"
+			}, {
+				quote: "The question isn’t who is going to let me; it’s who is going to stop me.",
+				author: "Ayn Rand"
+			}, {
+				quote: "Nothing is impossible, the word itself says, “I’m possible!”",
+				author: "Audrey Hepburn"
+			}, {
+				quote: "Whatever the mind of man can conceive and believe, it can achieve.",
+				author: "Napoleon Hill"
+			}, {
+				quote: "I attribute my success to this: I never gave or took any excuse.",
+				author: "Florence Nightingale"
+			}, {
+				quote: "I’ve missed more than 9000 shots in my career. I’ve lost almost 300 games. 26 times I’ve been trusted to take the game winning shot and missed. I’ve failed over and over and over again in my life. And that is why I succeed.",
+				author: "Michael Jordan"
+			}, {
+				quote: "Twenty years from now you will be more disappointed by the things that you didn’t do than by the ones you did do, so throw off the bowlines, sail away from safe harbor, catch the trade winds in your sails.  Explore, Dream, Discover.",
+				author: "Mark Twain"
+			}, {
+				quote: "Life is 10% what happens to me and 90% of how I react to it.",
+				author: "Charles Swindoll"
+			}];
+			let colours = [{
+				normal: "#007bff",
+				hover: "#0069d9"
+			}, {
+				normal: "#6610f2",
+				hover: "#510dbf"
+			}, {
+				normal: "#dc3545",
+				hover: "#c32232"
+			}, {
+				normal: "#28a745",
+				hover: "#228c3b"
+			}, {
+				normal: "#f39c12",
+				hover: "#d98c0f"
+			}];
+			// function componentToHex(c) {
+			// 	console.log("c: " + c);
+			// 	var hex = c.toString(16);
+			// 	console.log("hex: " + hex);
+			// 	return hex.length == 1 ? "0" + hex : hex;
+			// }
+			// function rgbToHex(rgb) {
+			// 	console.log(rgb);
+			// 	if(rgb=="") {
+			// 		return rgb;
+			// 	}
+			// 	// rgb = rgb.substring(4, rgb.length-1).replace(/ /g, '').split(',');
+			// 	rgb = rgb.match(/\d+/g);
+			// 	return "#" + componentToHex(rgb[0]) + componentToHex(rgb[1]) + componentToHex(rgb[2]);
+			// }
+			var hexDigits = new Array("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"); 
+
+			function rgbToHex(rgb) {
+				if(rgb=="") {
+					return "";
+				}
+				rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+				return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+			}
+			function hex(x) {
+				return isNaN(x) ? "00" : hexDigits[(x - x % 16) / 16] + hexDigits[x % 16];
+			}
+			function changeQuote() {
+				let colour = colours[Math.floor(Math.random() * colours.length)];
+				console.log("Old colour: " + rgbToHex(document.body.style.backgroundColor));
+				console.log("New colour: " + colour.normal);
+				while (colour.normal == rgbToHex(document.body.style.backgroundColor)) {
+					console.log("SAME COLOUR DETECTED");
+					colour = colours[Math.floor(Math.random() * colours.length)];
+				}
+				let quote = quotes[Math.floor(Math.random() * quotes.length)];
+				while (quote.quote == document.getElementById("text").innerText) {
+					quote = quotes[Math.floor(Math.random() * quotes.length)];
+				}
+				document.body.style.backgroundColor = colour.normal;
+				document.body.style.color = colour.normal;
+				document.getElementById("new-quote-button").style.backgroundColor = colour.normal;
+				$("#new-quote-button").hover(function() {
+					$(this).css("background-color", colour.hover)
+				}, function() {
+					$(this).css("background-color", colour.normal)
+				});
+				$("#quote-text").animate({opacity: 0}, 500);
+				$("#quote-author").animate({opacity: 0}, 500, function() {
+					document.getElementById("text").innerText = quote.quote;
+					document.getElementById("author").innerText = quote.author;
+				});
+				$("#quote-text").animate({opacity: 1}, 500);
+				$("#quote-author").animate({opacity: 1}, 500);
+			}
+			window.onload = changeQuote;
+		</script>
+	</head>
+	<body>
+		<div class="container-fluid">
+			<div id="main-section" class="row justify-content-center">
+				<div id="quote-container" class="col col-xl-4 col-lg-6 col-md-8 col-sm-10 p-5">
+					<div id="quote-text">
+						<span class="fas fa-quote-left"></span>
+						<span id="text"></span>
+					</div>
+					<div id="quote-author">
+						<span>-</span>
+						<span id="author"></span>
+					</div>
+					<div class="buttons">
+						<button value="NEW_QUOTE" id="new-quote-button" onclick="changeQuote()" class="btn btn-primary">New Quote</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	</body>
+</html>
